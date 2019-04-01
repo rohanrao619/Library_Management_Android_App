@@ -12,11 +12,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,18 +36,36 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
         toSignUp = (TextView) findViewById(R.id.toSignUp);
         progressDialog=new ProgressDialog(this);
-        if(firebaseAuth.getCurrentUser()!=null)
-        {
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-            finish();
-        }
+        db=FirebaseFirestore.getInstance();
 
+       if(firebaseAuth.getCurrentUser()!=null) {
+           String cur = firebaseAuth.getCurrentUser().getEmail().trim();
+           db.document("User/"+cur).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+               @Override
+               public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                   User obj=documentSnapshot.toObject(User.class);
+                   if(obj.getType()==0)
+                   {
+                       startActivity(new Intent(getApplicationContext(),UserHome.class));
+                       finish();
+
+                   }
+                   else
+                   {
+                       startActivity(new Intent(getApplicationContext(),AdminHome.class));
+                       finish();
+
+                   }
+
+               }
+           });
+
+        }
         buttonSignIn.setOnClickListener(this);
         toSignUp.setOnClickListener(this);
-
-
     }
-
+  private FirebaseFirestore db;
     private TextInputLayout editID;
     private TextInputLayout editPass;
     private Button buttonSignIn;
@@ -94,10 +117,37 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
-                {   progressDialog.cancel();
-                    Toast.makeText(SignInActivity.this,"Signed in !",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    finish();
+                {
+                    String id=editID.getEditText().getText().toString().trim();
+                    db.collection("User").whereEqualTo("email",id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            User obj=new User();
+                            for(QueryDocumentSnapshot doc:queryDocumentSnapshots)
+                               obj=doc.toObject(User.class);
+
+                            if(obj.getType()==0)
+                            {
+                                progressDialog.cancel();
+                                Toast.makeText(SignInActivity.this,"Signed in !",Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(),UserHome.class));
+                                finish();
+
+                            }
+                            else
+                            {
+                                progressDialog.cancel();
+                                Toast.makeText(SignInActivity.this,"Signed in !",Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(),AdminHome.class));
+                                finish();
+
+                            }
+
+
+
+                        }
+                    });
+
                 }
 
                 else

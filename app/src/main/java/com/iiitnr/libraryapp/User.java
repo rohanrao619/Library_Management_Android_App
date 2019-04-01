@@ -1,10 +1,19 @@
 package com.iiitnr.libraryapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
-    private String name, id,email;
+    private String name,email;
+    private List<Integer> book=new ArrayList<Integer>(5);
+    private List<Integer> fine=new ArrayList<Integer>(5);
     private int enroll, card,  type;
 
+    public User()
+    {
+
+    }
 
     public User(String name, String email, int enroll, int card, int type) {
         this.name = name;
@@ -22,20 +31,28 @@ public class User {
         this.name = name;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Integer> getBook() {
+        return book;
+    }
+
+    public void setBook(List<Integer> book) {
+        this.book = book;
+    }
+
+    public List<Integer> getFine() {
+        return fine;
+    }
+
+    public void setFine(List<Integer> fine) {
+        this.fine = fine;
     }
 
     public int getEnroll() {

@@ -252,9 +252,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                        public void onSuccess(Void aVoid) {
                            progressDialog.cancel();
                            String id=editID.getEditText().getText().toString().trim();
-                           db.document("User/"+id).update("id","Hello");
                            Toast.makeText(SignUpActivity.this,"Registered Successfully !",Toast.LENGTH_SHORT).show();
-                           startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                           firebaseAuth.signOut();
+                           startActivity(new Intent(getApplicationContext(),SignInActivity.class));
                            finish();
                        }
                    });
@@ -291,16 +291,3 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 }
-
-/* db.collection("User").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-
-                            String id1=documentReference.getId();
-                            db.document("User/"+id1).update("id",id1);
-                            progressDialog.cancel();
-                            Toast.makeText(SignUpActivity.this,"Registered Successfully !",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                            finish();
-                        }
-                    });*/
