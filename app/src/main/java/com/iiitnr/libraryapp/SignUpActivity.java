@@ -9,17 +9,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +47,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
     private CheckBox check1;
+    private FirebaseFirestore db;
+    private Spinner userType;
+    private String type;
+    private int type1;
 
 
     @Override
@@ -54,9 +69,30 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         toSignIn = (TextView) findViewById(R.id.toSignIn);
         progressDialog=new ProgressDialog(this);
         check1=(CheckBox)findViewById(R.id.check1);
+        userType=(Spinner)findViewById(R.id.userType);
 
+        List<String> list = new ArrayList<>();
+        list.add("Select Account Type");
+        list.add("User");
+        list.add("Admin");
+
+        ArrayAdapter adapter =new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        userType.setAdapter(adapter);
+        userType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                type=parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         FirebaseApp.initializeApp(this);
         firebaseAuth=FirebaseAuth.getInstance();
+        db=FirebaseFirestore.getInstance();
         buttonRegister.setOnClickListener(this);
         toSignIn.setOnClickListener(this);
         check1.setOnClickListener(this);
@@ -174,13 +210,28 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    private boolean verifyType()
+    {
+       if (type.equals("Select Account Type"))
+       {
+           Toast.makeText(this, "Please select account type !", Toast.LENGTH_SHORT).show();
+           return true;
+       }
+       return false;
+    }
     private void registerUser()
     {
-        boolean res= (verifyName()|verifyCardNo()|verifyEmailId()|verifyEnrollNo()|verifyPass()|verifyPass1());
+        boolean res= (verifyName()|verifyCardNo()|verifyEmailId()|verifyEnrollNo()|verifyPass()|verifyPass1()|verifyType());
         if(res==true)
             return;
         String id=editID.getEditText().getText().toString().trim();
         String pass=editPass.getEditText().getText().toString().trim();
+        if(type.equals("User")){
+            type1=0;
+        }
+        else
+            type1=1;
+
         progressDialog.setMessage("Registering User ... ");
         progressDialog.show();
 
@@ -189,10 +240,26 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
-                {   progressDialog.cancel();
-                    Toast.makeText(SignUpActivity.this,"Registered Successfully !",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                    finish();
+                {
+                    String id=editID.getEditText().getText().toString().trim();
+                    int enroll=Integer.parseInt(editEnrollNo.getEditText().getText().toString().trim());
+                    int card=Integer.parseInt(editCardNo.getEditText().getText().toString().trim());
+                    String name=editName.getEditText().getText().toString().trim();
+                    User user =new User(name,id,enroll,card,type1);
+
+                   db.collection("User").document(id).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                       @Override
+                       public void onSuccess(Void aVoid) {
+                           progressDialog.cancel();
+                           String id=editID.getEditText().getText().toString().trim();
+                           db.document("User/"+id).update("id","Hello");
+                           Toast.makeText(SignUpActivity.this,"Registered Successfully !",Toast.LENGTH_SHORT).show();
+                           startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                           finish();
+                       }
+                   });
+
+
                 }
 
                 else
@@ -201,6 +268,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
+
 
     }
 
@@ -223,3 +291,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 }
+
+/* db.collection("User").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+
+                            String id1=documentReference.getId();
+                            db.document("User/"+id1).update("id",id1);
+                            progressDialog.cancel();
+                            Toast.makeText(SignUpActivity.this,"Registered Successfully !",Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            finish();
+                        }
+                    });*/

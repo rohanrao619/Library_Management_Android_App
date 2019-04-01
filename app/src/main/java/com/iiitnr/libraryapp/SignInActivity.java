@@ -49,7 +49,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     private TextView toSignUp;
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
-
     private boolean verifyEmailId()
     {
         String emailId=editID.getEditText().getText().toString().trim();
@@ -107,6 +106,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
+
     }
 
 
