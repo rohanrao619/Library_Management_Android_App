@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserHome"/>
+        <activity android:name=".AdminUpdateBook"></activity>
+        <activity android:name=".AdminRemoveBook" />
+        <activity android:name=".AdminAddBook" />
+        <activity android:name=".UserHome" />
         <activity android:name=".AdminHome" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity" />

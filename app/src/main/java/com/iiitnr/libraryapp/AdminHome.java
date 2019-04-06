@@ -56,11 +56,11 @@ public class AdminHome extends AppCompatActivity implements View.OnClickListener
         }
         if(v==addBook)
         {
-            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(),AdminAddBook.class));
         }
         if(v==removeBook)
         {
-            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(),AdminRemoveBook.class));
         }
         if(v==issueBook)
         {
@@ -75,7 +75,7 @@ public class AdminHome extends AppCompatActivity implements View.OnClickListener
 
         if(v==updateBook)
         {
-            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(),AdminUpdateBook.class));
         }
 
 

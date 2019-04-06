@@ -26,8 +26,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +54,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private Spinner userType;
     private String type;
     private int type1;
+    private int temp;
 
 
     @Override
@@ -103,6 +107,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private boolean verifyName()
     {
+
         String name=editName.getEditText().getText().toString().trim();
         if(name.isEmpty())
         {   editName.setErrorEnabled(true);
@@ -219,11 +224,32 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
        }
        return false;
     }
+
+    private boolean verifyCard1()
+    {
+        db.collection("User").whereEqualTo("card",Integer.parseInt(editCardNo.getEditText().getText().toString().trim())).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+                {
+                   temp=task.getResult().size();
+                }
+            }
+        });
+        if(temp==0)
+            return false;
+        else
+            return true;
+
+    }
+
     private void registerUser()
     {
         boolean res= (verifyName()|verifyCardNo()|verifyEmailId()|verifyEnrollNo()|verifyPass()|verifyPass1()|verifyType());
         if(res==true)
             return;
+
+
         String id=editID.getEditText().getText().toString().trim();
         String pass=editPass.getEditText().getText().toString().trim();
         if(type.equals("User")){
@@ -264,6 +290,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
                 else
                 {   progressDialog.cancel();
+
                     Toast.makeText(SignUpActivity.this,"Registration Failed ! Try Again ",Toast.LENGTH_SHORT).show();
                 }
             }

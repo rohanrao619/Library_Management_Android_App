@@ -6,12 +6,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -22,6 +24,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SignInActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,7 +48,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
            db.document("User/"+cur).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                @Override
                public void onSuccess(DocumentSnapshot documentSnapshot) {
-
                    User obj=documentSnapshot.toObject(User.class);
                    if(obj.getType()==0)
                    {
@@ -58,6 +62,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                    }
 
+               }
+           }).addOnFailureListener(new OnFailureListener() {
+               @Override
+               public void onFailure(@NonNull Exception e) {
+                   Toast.makeText(SignInActivity.this, "Please Sign in Again", Toast.LENGTH_SHORT).show();
                }
            });
 
@@ -111,7 +120,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         String id=editID.getEditText().getText().toString().trim();
         String pass=editPass.getEditText().getText().toString().trim();
         progressDialog.setMessage("Signing In ... ");
-        progressDialog.show();
+       progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(id,pass).addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -147,12 +156,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
                         }
                     });
-
                 }
 
                 else
                 {   progressDialog.cancel();
-                    Toast.makeText(SignInActivity.this,"Wrong Credentials ! Try Again ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignInActivity.this,"Wrong Credentials or Bad Connection ! Try Again ",Toast.LENGTH_SHORT).show();
                 }
             }
         });
