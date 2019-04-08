@@ -64,13 +64,11 @@ public class AdminHome extends AppCompatActivity implements View.OnClickListener
         }
         if(v==issueBook)
         {
-            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(),AdminIssueBook.class));
         }
         if(v==returnBook)
         {
-            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
-
-
+            startActivity(new Intent(getApplicationContext(),AdminReturnBook.class));
         }
 
         if(v==updateBook)

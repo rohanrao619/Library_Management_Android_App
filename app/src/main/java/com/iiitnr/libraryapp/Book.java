@@ -21,6 +21,7 @@ public class Book {
         this.available=total;
     }
 
+
     public String getTitle() {
         return title;
     }

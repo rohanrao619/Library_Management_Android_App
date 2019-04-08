@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -37,6 +38,7 @@ public class AdminRemoveBook extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_admin_remove_book);
         findBook=(Button)findViewById(R.id.findBook);
         editBid1=(TextInputLayout)findViewById(R.id.editBid1);
+        FirebaseApp.initializeApp(this);
         db=FirebaseFirestore.getInstance();
         findBook.setOnClickListener(this);
         progressDialog=new ProgressDialog(this);

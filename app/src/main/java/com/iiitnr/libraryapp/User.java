@@ -18,15 +18,15 @@ public class User {
     private int card;
     private int type;
 
-    public int getTot_fine() {
-        return tot_fine;
+    public int getLeft_fine() {
+        return left_fine;
     }
 
-    public void setTot_fine(int tot_fine) {
-        this.tot_fine = tot_fine;
+    public void setLeft_fine(int left_fine) {
+        this.left_fine = left_fine;
     }
 
-    private int tot_fine;
+    private int left_fine;
 
 
     public int getType() {

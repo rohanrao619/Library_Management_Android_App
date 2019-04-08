@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -161,7 +162,7 @@ private void updateBook()
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_update_book);
-
+    FirebaseApp.initializeApp(this);
         editTitle2=(TextInputLayout)findViewById(R.id.editTitle2);
         editBid2=(TextInputLayout) findViewById(R.id.editBid2);
         editUnits2=(TextInputLayout)findViewById(R.id.editUnits2);

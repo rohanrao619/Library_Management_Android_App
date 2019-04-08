@@ -52,7 +52,7 @@ public class UserHome extends AppCompatActivity implements View.OnClickListener 
 
         if(v==seeBook)
         {
-            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(),UserSeeMyBooks.class));
         }
     }
 }

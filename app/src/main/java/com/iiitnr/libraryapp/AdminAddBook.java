@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
@@ -31,6 +32,7 @@ public class AdminAddBook extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add_book);
+        FirebaseApp.initializeApp(this);
         editTitle=(TextInputLayout)findViewById(R.id.editTitle);
         editBid=(TextInputLayout) findViewById(R.id.editBid);
         editUnits=(TextInputLayout)findViewById(R.id.editUnits);
