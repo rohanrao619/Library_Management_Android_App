@@ -57,72 +57,26 @@ public class UserSeeMyBooks extends AppCompatActivity {
                         List<Integer> l = new ArrayList<Integer>();
                         l = U.getBook();
 
-                        Calendar c = new Calendar() {
-                            @Override
-                            protected void computeTime() {
 
-                            }
-
-                            @Override
-                            protected void computeFields() {
-
-                            }
-
-                            @Override
-                            public void add(int field, int amount) {
-
-                            }
-
-                            @Override
-                            public void roll(int field, boolean up) {
-
-                            }
-
-                            @Override
-                            public int getMinimum(int field) {
-                                return 0;
-                            }
-
-                            @Override
-                            public int getMaximum(int field) {
-                                return 0;
-                            }
-
-                            @Override
-                            public int getGreatestMinimum(int field) {
-                                return 0;
-                            }
-
-                            @Override
-                            public int getLeastMaximum(int field) {
-                                return 0;
-                            }
-                        };
-                        Date d = new Date();
                         for (int i = 0; i < l.size(); i++) {
 
-                            db.collection("Book").whereEqualTo("id",l.get(i)/100).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            db.document("Book/"+l.get(i)/100).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if(task.isSuccessful())
-                                    {
-                                        Book b=new Book();
-                                        for(QueryDocumentSnapshot doc:task.getResult())
-                                            B = doc.toObject(Book.class);
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                                    }
-                                    else
-                                    {
-                                        flag=1;
-                                    }
+                                   B=task.getResult().toObject(Book.class);
+
                                 }
+
                             });
 
+                            Date d = new Date();
                             S+="\n\nBook ID :"+l.get(i);
                             S += "\nTitle : " + B.getTitle() + "\nCategory : " + B.getType();
                             d=U.getDate().get(i).toDate();
                             S+="\nIssue Date : "+simpleDateFormat.format(d);
-                            c=Calendar.getInstance();
+                            Calendar c=Calendar.getInstance();
+                            c.setTime(d);
                             c.add(Calendar.DAY_OF_MONTH,14);
                             d=c.getTime();
                             S+="\nReturn Date : "+simpleDateFormat.format(d);

@@ -19,11 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -86,7 +88,59 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         userType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                type=parent.getItemAtPosition(position).toString();
+
+                if(parent.getItemAtPosition(position).toString().equals("Select Account Type"))
+                {
+                    type=parent.getItemAtPosition(position).toString();
+                    editPass1.setEnabled(false);
+                    editPass.setEnabled(false);
+                    editName.setEnabled(false);
+                    editID.setEnabled(false);
+                    editEnrollNo.setEnabled(false);
+                    editCardNo.setEnabled(false);
+
+                    editCardNo.setErrorEnabled(false);
+                    editEnrollNo.setErrorEnabled(false);
+                    editID.setErrorEnabled(false);
+                    editName.setErrorEnabled(false);
+                    editPass.setErrorEnabled(false);
+                    editPass1.setErrorEnabled(false);
+
+                }
+                else if(parent.getItemAtPosition(position).toString().equals("User"))
+                {
+                    type=parent.getItemAtPosition(position).toString();
+                    editPass1.setEnabled(true);
+                    editPass.setEnabled(true);
+                    editName.setEnabled(true);
+                    editID.setEnabled(true);
+                    editEnrollNo.setEnabled(true);
+                    editCardNo.setEnabled(true);
+
+                    editCardNo.setErrorEnabled(false);
+                    editEnrollNo.setErrorEnabled(false);
+                    editID.setErrorEnabled(false);
+                    editName.setErrorEnabled(false);
+                    editPass.setErrorEnabled(false);
+                    editPass1.setErrorEnabled(false);
+                }
+                else
+                {
+                    type=parent.getItemAtPosition(position).toString();
+                    editPass1.setEnabled(true);
+                    editPass.setEnabled(true);
+                    editName.setEnabled(true);
+                    editID.setEnabled(true);
+                    editEnrollNo.setEnabled(false);
+                    editCardNo.setEnabled(false);
+
+                    editCardNo.setErrorEnabled(false);
+                    editEnrollNo.setErrorEnabled(false);
+                    editID.setErrorEnabled(false);
+                    editName.setErrorEnabled(false);
+                    editPass.setErrorEnabled(false);
+                    editPass1.setErrorEnabled(false);
+                }
             }
 
             @Override
@@ -215,7 +269,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private boolean verifyType()
+  private boolean verifyType()
     {
        if (type.equals("Select Account Type"))
        {
@@ -245,10 +299,22 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private void registerUser()
     {
-        boolean res= (verifyName()|verifyCardNo()|verifyEmailId()|verifyEnrollNo()|verifyPass()|verifyPass1()|verifyType());
-        if(res==true)
-            return;
 
+        if(verifyType())
+           return;
+
+        if(type.equals("User"))
+        {
+            boolean res= (verifyName()|verifyCardNo()|verifyEmailId()|verifyEnrollNo()|verifyPass()|verifyPass1());
+            if(res==true)
+                return;
+        }
+        if(type.equals("Admin"))
+        {
+            boolean res= (verifyName()|verifyEmailId()|verifyPass()|verifyPass1());
+            if(res==true)
+                return;
+        }
 
         String id=editID.getEditText().getText().toString().trim();
         String pass=editPass.getEditText().getText().toString().trim();
@@ -268,30 +334,59 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 if(task.isSuccessful())
                 {
                     String id=editID.getEditText().getText().toString().trim();
-                    int enroll=Integer.parseInt(editEnrollNo.getEditText().getText().toString().trim());
-                    int card=Integer.parseInt(editCardNo.getEditText().getText().toString().trim());
                     String name=editName.getEditText().getText().toString().trim();
-                    User user =new User(name,id,enroll,card,type1);
+                    if(type1==0)
+                    {
 
-                   db.collection("User").document(id).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                       @Override
-                       public void onSuccess(Void aVoid) {
-                           progressDialog.cancel();
-                           String id=editID.getEditText().getText().toString().trim();
-                           Toast.makeText(SignUpActivity.this,"Registered Successfully !",Toast.LENGTH_SHORT).show();
-                           firebaseAuth.signOut();
-                           startActivity(new Intent(getApplicationContext(),SignInActivity.class));
-                           finish();
-                       }
-                   });
+                        int enroll=Integer.parseInt(editEnrollNo.getEditText().getText().toString().trim());
+                        int card=Integer.parseInt(editCardNo.getEditText().getText().toString().trim());
+                        db.collection("User").document(id).set(new User(name,id,enroll,card,type1)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                progressDialog.cancel();
+                                Toast.makeText(SignUpActivity.this,"Registered Successfully !",Toast.LENGTH_SHORT).show();
+                                firebaseAuth.signOut();
+                                startActivity(new Intent(getApplicationContext(),SignInActivity.class));
+                                finish();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(SignUpActivity.this, "Please Try Again !", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else {
 
+                        db.collection("User").document(id).set(new Admin(type1,name,id)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                progressDialog.cancel();
+                                Toast.makeText(SignUpActivity.this,"Registered Successfully !",Toast.LENGTH_SHORT).show();
+                                firebaseAuth.signOut();
+                                startActivity(new Intent(getApplicationContext(),SignInActivity.class));
+                                finish();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(SignUpActivity.this, "Please Try Again !", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
 
                 }
 
                 else
                 {   progressDialog.cancel();
+                if(task.getException() instanceof FirebaseAuthUserCollisionException)
+                {
+                    Toast.makeText(SignUpActivity.this,"Already Registered ! ",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(SignUpActivity.this, "Registration Failed ! Try Again ", Toast.LENGTH_SHORT).show();
+                }
 
-                    Toast.makeText(SignUpActivity.this,"Registration Failed ! Try Again ",Toast.LENGTH_SHORT).show();
                 }
             }
         });

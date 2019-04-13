@@ -8,6 +8,14 @@
     android:layout_margin="20dp"
     >
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="USER REGISTRATION"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:textColor="#111D8F"/>
+
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -18,13 +26,12 @@
     android:orientation="vertical"
     android:layout_height="wrap_content">
 
-    <TextView
+    <Spinner
+        android:layout_marginTop="20dp"
+        android:id="@+id/userType"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="USER REGISTRATION"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:textColor="#111D8F"/>
+        android:layout_height="50dp"
+        ></Spinner>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -117,11 +124,7 @@
 
     </android.support.design.widget.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/userType"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            ></Spinner>
+
         <CheckBox
             android:id="@+id/check1"
             android:layout_width="match_parent"

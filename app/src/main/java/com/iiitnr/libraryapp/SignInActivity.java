@@ -34,9 +34,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+        FirebaseApp.initializeApp(getApplicationContext());
         editID = (TextInputLayout) findViewById(R.id.editID);
         editPass = (TextInputLayout) findViewById(R.id.editPass);
-        FirebaseApp.initializeApp(this);
         firebaseAuth=FirebaseAuth.getInstance();
         buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
         toSignUp = (TextView) findViewById(R.id.toSignUp);
@@ -117,7 +117,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         boolean res= (verifyEmailId()|verifyPass());
         if(res==true)
             return;
-        String id=editID.getEditText().getText().toString().trim();
+        String id=editID.getEditText().getText().toString().trim()+"@iiitnr.edu.in";
         String pass=editPass.getEditText().getText().toString().trim();
         progressDialog.setMessage("Signing In ... ");
        progressDialog.show();
@@ -127,7 +127,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
-                    String id=editID.getEditText().getText().toString().trim();
+                    String id=editID.getEditText().getText().toString().trim()+"@iiitnr.edu.in";
                     db.collection("User").whereEqualTo("email",id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

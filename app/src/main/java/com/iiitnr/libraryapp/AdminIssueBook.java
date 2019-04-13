@@ -1,10 +1,14 @@
 package com.iiitnr.libraryapp;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -13,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -36,6 +41,7 @@ public class AdminIssueBook extends AppCompatActivity {
     private Book B1 = new Book();
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +50,7 @@ public class AdminIssueBook extends AppCompatActivity {
         issueButton = (Button) findViewById(R.id.issueButton);
         editBid3 = (TextInputLayout) findViewById(R.id.editBid3);
         editCardNo1 = (TextInputLayout) findViewById(R.id.editCardNo1);
-        db = FirebaseFirestore.getInstance();
+        db=FirebaseFirestore.getInstance();
         p = new ProgressDialog(this);
         issueButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +116,7 @@ public class AdminIssueBook extends AppCompatActivity {
     }
 
     private boolean getBook() {
+
         db.document("Book/" + Integer.parseInt(editBid3.getEditText().getText().toString().trim()) / 100).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -134,124 +141,119 @@ public class AdminIssueBook extends AppCompatActivity {
     }
 
     private void issueBook() {
+
+        if (verifyBid() | verifyCard()) {
+            return;
+        }
         p.setMessage("Please Wait !");
         p.show();
-        //editBid3.getEditText().setText("");
-        //editCardNo1.getEditText().setText("");
-        //Toast.makeText(this, "click", Toast.LENGTH_SHORT).show();
-        if (verifyBid() | verifyCard())
-            return;
-
-        if (!getUser())
-            return;
-
-        if (!getBook())
-            return;
-
-        if (U.getBook().size() >= 5) {
+        if (getBook()&getUser())
+        {
             p.cancel();
-            Toast.makeText(AdminIssueBook.this, "User Already Has 5 books issued !", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (B1.getAvailable() == 0) {
-            p.cancel();
-            Toast.makeText(AdminIssueBook.this, "No Units of this Book Available !", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (B1.getUnit().contains(Integer.parseInt(editBid3.getEditText().getText().toString().trim()) % 100)) {
-            p.cancel();
-            Toast.makeText(AdminIssueBook.this, "This Unit is Already Issued !", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        List<Integer> l = new ArrayList<Integer>();
-        l = U.getBook();
-        l.add(Integer.parseInt(editBid3.getEditText().getText().toString().trim()));
-        U.setBook(l);
-        l = U.getFine();
-        l.add(0);
-        U.setFine(l);
-        l = U.getRe();
-        l.add(1);
-        U.setRe(l);
-        List<Timestamp> l1 = new ArrayList<>();
-        l1 = U.getDate();
-        Calendar c = new Calendar() {
-            @Override
-            protected void computeTime() {
-
+            if (U.getBook().size() >= 5) {
+                p.cancel();
+                Toast.makeText(AdminIssueBook.this, "User Already Has 5 books issued !", Toast.LENGTH_SHORT).show();
+                return;
             }
-
-            @Override
-            protected void computeFields() {
-
+            if (B1.getAvailable() == 0) {
+                p.cancel();
+                Toast.makeText(AdminIssueBook.this, "No Units of this Book Available !", Toast.LENGTH_SHORT).show();
+                return;
             }
-
-            @Override
-            public void add(int field, int amount) {
-
+            if (B1.getUnit().contains(Integer.parseInt(editBid3.getEditText().getText().toString().trim()) % 100)) {
+                p.cancel();
+                Toast.makeText(AdminIssueBook.this, "This Unit is Already Issued !", Toast.LENGTH_SHORT).show();
+                return;
             }
+            List<Integer> l = new ArrayList<Integer>();
+            l = U.getBook();
+            l.add(Integer.parseInt(editBid3.getEditText().getText().toString().trim()));
+            U.setBook(l);
+            l = U.getFine();
+            l.add(0);
+            U.setFine(l);
+            l = U.getRe();
+            l.add(1);
+            U.setRe(l);
+            List<Timestamp> l1 = new ArrayList<>();
+            l1 = U.getDate();
+            Calendar c = new Calendar() {
+                @Override
+                protected void computeTime() {
 
-            @Override
-            public void roll(int field, boolean up) {
-
-            }
-
-            @Override
-            public int getMinimum(int field) {
-                return 0;
-            }
-
-            @Override
-            public int getMaximum(int field) {
-                return 0;
-            }
-
-            @Override
-            public int getGreatestMinimum(int field) {
-                return 0;
-            }
-
-            @Override
-            public int getLeastMaximum(int field) {
-                return 0;
-            }
-        };
-        c=Calendar.getInstance();
-        Date d = c.getTime();
-        Timestamp t = new Timestamp(d);
-        l1.add(t);
-        U.setDate(l1);
-        db.document("User/" + U.getEmail()).set(U).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-
-                    B1.setAvailable(B1.getAvailable()-1);
-                    List<Integer> l1=new ArrayList<>();
-                    l1=B1.getUnit();
-                    l1.add(Integer.parseInt(editBid3.getEditText().getText().toString().trim()) % 100);
-                    B1.setUnit(l1);
-
-                    db.document("Book/" + B1.getId()).set(B1).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                p.cancel();
-                                Toast.makeText(AdminIssueBook.this, "Book Issued Successfully !", Toast.LENGTH_SHORT).show();
-
-                            } else {
-                                p.cancel();
-                                Toast.makeText(AdminIssueBook.this, "Try Again !", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                } else {
-                    p.cancel();
-                    Toast.makeText(AdminIssueBook.this, "Try Again !", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
 
+                @Override
+                protected void computeFields() {
+
+                }
+
+                @Override
+                public void add(int field, int amount) {
+
+                }
+
+                @Override
+                public void roll(int field, boolean up) {
+
+                }
+
+                @Override
+                public int getMinimum(int field) {
+                    return 0;
+                }
+
+                @Override
+                public int getMaximum(int field) {
+                    return 0;
+                }
+
+                @Override
+                public int getGreatestMinimum(int field) {
+                    return 0;
+                }
+
+                @Override
+                public int getLeastMaximum(int field) {
+                    return 0;
+                }
+            };
+            c=Calendar.getInstance();
+            Date d = c.getTime();
+            Timestamp t = new Timestamp(d);
+            l1.add(t);
+            U.setDate(l1);
+            db.document("User/" +U.getEmail()).set(U).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+
+                        B1.setAvailable(B1.getAvailable()-1);
+                        List<Integer> l1=new ArrayList<>();
+                        l1=B1.getUnit();
+                        l1.add(Integer.parseInt(editBid3.getEditText().getText().toString().trim()) % 100);
+                        B1.setUnit(l1);
+
+                        db.document("Book/" + B1.getId()).set(B1).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    p.cancel();
+                                    Toast.makeText(AdminIssueBook.this, "Book Issued Successfully !", Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    p.cancel();
+                                    Toast.makeText(AdminIssueBook.this, "Try Again !", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    } else {
+                        p.cancel();
+                        Toast.makeText(AdminIssueBook.this, "Try Again !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+        }
     }
 }
