@@ -26,6 +26,7 @@ public class AdminRemoveBook extends AppCompatActivity implements View.OnClickLi
     private TextInputLayout editBid1;
     FirebaseFirestore db;
     private ProgressDialog progressDialog;
+
     private Button removeButton;
     private TextView detail;
     private Button cancel;
@@ -42,6 +43,7 @@ public class AdminRemoveBook extends AppCompatActivity implements View.OnClickLi
         db=FirebaseFirestore.getInstance();
         findBook.setOnClickListener(this);
         progressDialog=new ProgressDialog(this);
+        progressDialog.setCancelable(false);
         removeButton=(Button)findViewById(R.id.removeButton);
         detail=(TextView)findViewById(R.id.detail);
         cancel=(Button)findViewById(R.id.cancel); 

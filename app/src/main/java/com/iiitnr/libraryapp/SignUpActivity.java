@@ -74,6 +74,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
         toSignIn = (TextView) findViewById(R.id.toSignIn);
         progressDialog=new ProgressDialog(this);
+        progressDialog.setCancelable(false);
         check1=(CheckBox)findViewById(R.id.check1);
         userType=(Spinner)findViewById(R.id.userType);
 

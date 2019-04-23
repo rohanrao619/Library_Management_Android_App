@@ -39,6 +39,7 @@ public class AdminAddBook extends AppCompatActivity implements View.OnClickListe
         spinner1=(Spinner)findViewById(R.id.spinner1);
         button1=(Button)findViewById(R.id.button1);
         p1=new ProgressDialog(this);
+        p1.setCancelable(false);
         db=FirebaseFirestore.getInstance();
 
 

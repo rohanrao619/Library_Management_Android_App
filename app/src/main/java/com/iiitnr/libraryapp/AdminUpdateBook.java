@@ -31,6 +31,7 @@ public class AdminUpdateBook extends AppCompatActivity implements View.OnClickLi
     private Button button2;
     private String type;
     private ProgressDialog p1;
+
     private Book book=new Book();
     private int qtity;
 
@@ -169,6 +170,7 @@ private void updateBook()
         spinner2=(Spinner)findViewById(R.id.spinner2);
         button2=(Button)findViewById(R.id.button2);
         p1=new ProgressDialog(this);
+        p1.setCancelable(false);
         db=FirebaseFirestore.getInstance();
 
         List<String> list1 = new ArrayList<>();
