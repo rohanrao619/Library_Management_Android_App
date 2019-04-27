@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Library App</string>
+
+
+    <string-array name="list1">
+        <item>"Select Book Category"</item>
+        <item>"CSE"</item>
+        <item>"ECE"</item>
+        <item>"Magazine"</item>
+        <item>"Novel"</item>
+        <item>"Mathematics"</item>
+        <item>"GATE"</item>
+        <item>"Business"</item>
+        <item>"Others"</item>
+
+
+    </string-array>
+
 </resources>

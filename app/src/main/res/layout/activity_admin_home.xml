@@ -19,7 +19,7 @@
 
     <Button
         android:layout_width="200dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="50dp"
         android:gravity="center"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
@@ -67,6 +67,25 @@
         android:id="@+id/returnBook"
         android:hint="Return Book from User"
         />
+
+    <Button
+        android:layout_width="200dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:id="@+id/reissueBook"
+        android:hint="Re-Issue Book"
+        />
+
+    <Button
+        android:layout_width="200dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:id="@+id/collect1"
+        android:hint="Collect Fine"
+        />
+
     <Button
         android:layout_width="200dp"
         android:gravity="center"

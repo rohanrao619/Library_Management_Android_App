@@ -32,7 +32,6 @@ import java.util.List;
 public class AdminIssueBook extends AppCompatActivity {
 
 
-    private Button issueButton;
     private TextInputLayout editCardNo1, editBid3;
     private FirebaseFirestore db;
     private ProgressDialog p;
@@ -47,7 +46,7 @@ public class AdminIssueBook extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_issue_book);
         FirebaseApp.initializeApp(this);
-        issueButton = (Button) findViewById(R.id.issueButton);
+        Button issueButton = (Button) findViewById(R.id.issueButton);
         editBid3 = (TextInputLayout) findViewById(R.id.editBid3);
         editCardNo1 = (TextInputLayout) findViewById(R.id.editCardNo1);
         db=FirebaseFirestore.getInstance();
@@ -81,7 +80,7 @@ public class AdminIssueBook extends AppCompatActivity {
             editBid3.setError("Book Id Required");
             return true;
         } else {
-            editCardNo1.setErrorEnabled(false);
+            editBid3.setErrorEnabled(false);
             return false;
         }
     }
@@ -142,6 +141,7 @@ public class AdminIssueBook extends AppCompatActivity {
 
     private void issueBook() {
 
+        Log.d("abc","invoked");
         if (verifyBid() | verifyCard()) {
             return;
         }
@@ -149,7 +149,7 @@ public class AdminIssueBook extends AppCompatActivity {
         p.show();
         if (getBook()&getUser())
         {
-            p.cancel();
+
             if (U.getBook().size() >= 5) {
                 p.cancel();
                 Toast.makeText(AdminIssueBook.this, "User Already Has 5 books issued !", Toast.LENGTH_SHORT).show();

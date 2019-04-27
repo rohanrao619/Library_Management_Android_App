@@ -43,16 +43,8 @@ public class AdminAddBook extends AppCompatActivity implements View.OnClickListe
         db=FirebaseFirestore.getInstance();
 
 
-        List<String> list1 = new ArrayList<>();
-        list1.add("Select Book Category");
-        list1.add("CSE");
-        list1.add("ECE");
-        list1.add("Magazine");
-        list1.add("Entrepreneurship");
-        list1.add("Novel");
-        list1.add("GATE");
-        list1.add("Others");
-        ArrayAdapter adapter =new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,list1);
+        String A[]=getResources().getStringArray(R.array.list1);
+        ArrayAdapter adapter =new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,A);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter);
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

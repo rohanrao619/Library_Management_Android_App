@@ -144,6 +144,24 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                             for(QueryDocumentSnapshot doc:queryDocumentSnapshots)
                                obj=doc.toObject(User.class);
 
+
+                            db.document("User/"+firebaseAuth.getCurrentUser().getEmail()).update("fcmToken",SharedPref.getInstance(getApplicationContext()).getToken())
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                            if(task.isSuccessful())
+                                            {
+                                                Toast.makeText(SignInActivity.this, "Registered for Notifications Successfully !", Toast.LENGTH_SHORT).show();
+                                            }
+                                            else
+                                            {
+                                                Toast.makeText(SignInActivity.this, "Registration for Notifications Failed !\nPlease Sign in Again to Retry", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+                                    });
+
                             if(obj.getType()==0)
                             {
                                 progressDialog.cancel();

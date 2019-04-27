@@ -1,6 +1,7 @@
 package com.iiitnr.libraryapp;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,8 +9,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserHome extends AppCompatActivity implements View.OnClickListener {
 
@@ -25,6 +29,7 @@ public class UserHome extends AppCompatActivity implements View.OnClickListener 
         seeBook=(Button)findViewById(R.id.seeBook);
         logOut1=(Button)findViewById(R.id.logOut1);
 
+        db=FirebaseFirestore.getInstance();
         searchBook1.setOnClickListener(this);
         seeBook.setOnClickListener(this);
         logOut1.setOnClickListener(this);
@@ -34,20 +39,35 @@ public class UserHome extends AppCompatActivity implements View.OnClickListener 
     private TextView title1;
     private Button searchBook1,seeBook,logOut1;
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore db;
 
 
     @Override
     public void onClick(View v) {
         if(v==logOut1)
         {
-            firebaseAuth.signOut();
-            startActivity(new Intent(getApplicationContext(),SignInActivity.class));
-            finish();
+            db.document("User/"+firebaseAuth.getCurrentUser().getEmail()).update("fcmToken",null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful())
+                    {
+
+                        firebaseAuth.signOut();
+                        startActivity(new Intent(getApplicationContext(),SignInActivity.class));
+                        finish();
+
+                    }
+                    else
+                    {
+                        Toast.makeText(UserHome.this, "Try Again !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
 
         if(v==searchBook1)
         {
-            Toast.makeText(this, "Work in progress", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getApplicationContext(),SearchBookSet.class));
         }
 
         if(v==seeBook)

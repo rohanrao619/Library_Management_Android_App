@@ -5,6 +5,16 @@ public class Admin {
     private int type;
     private String name,email;
 
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
+    private String fcmToken;
+
 
 
     public Admin() {

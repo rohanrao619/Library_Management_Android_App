@@ -18,6 +18,16 @@ public class User {
     private int card;
     private int type;
 
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
+    private String fcmToken;
+
     public int getLeft_fine() {
         return left_fine;
     }

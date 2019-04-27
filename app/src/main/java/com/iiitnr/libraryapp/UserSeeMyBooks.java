@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,8 +46,24 @@ public class UserSeeMyBooks extends AppCompatActivity {
         showBook();
     }
 
+    private void setBook(int i)
+    {
+
+        db.document("Book/"+U.getBook().get(i)/100).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                B=task.getResult().toObject(Book.class);
+                Toast.makeText(UserSeeMyBooks.this, ""+B.getTitle(), Toast.LENGTH_SHORT).show();
+
+            }
+
+        });
+    }
     private void showBook()
     {
+
+
         db.document("User/" + firebaseAuth.getCurrentUser().getEmail()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -60,15 +77,7 @@ public class UserSeeMyBooks extends AppCompatActivity {
 
                         for (int i = 0; i < l.size(); i++) {
 
-                            db.document("Book/"+l.get(i)/100).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
-                                   B=task.getResult().toObject(Book.class);
-
-                                }
-
-                            });
+                            setBook(i);
 
                             Date d = new Date();
                             S+="\n\nBook ID :"+l.get(i);
