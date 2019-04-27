@@ -37,6 +37,10 @@ public class BookAdapter extends FirestoreRecyclerAdapter<Book, BookAdapter.Book
           if((!model.getTitle().contains(key))&&(mode==1))
             {
                holder.itemView.setVisibility(View.GONE);
+               RecyclerView.LayoutParams layoutParams=(RecyclerView.LayoutParams)holder.itemView.getLayoutParams();
+               layoutParams.height=0;
+               layoutParams.width=0;
+               holder.itemView(layoutParams);
             }
 
 

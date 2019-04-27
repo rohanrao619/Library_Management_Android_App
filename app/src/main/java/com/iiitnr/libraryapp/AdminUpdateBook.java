@@ -119,7 +119,7 @@ private void updateBook()
                     }
                     if(verifyTitle())
                     {
-                        book.setTitle(editTitle2.getEditText().getText().toString().trim());
+                        book.setTitle(editTitle2.getEditText().getText().toString().trim().toUpperCase());
                     }
                     if(qtity>=0) {
                         db.document("Book/" + Integer.parseInt(editBid2.getEditText().getText().toString().trim())).set(book).addOnCompleteListener(new OnCompleteListener<Void>() {

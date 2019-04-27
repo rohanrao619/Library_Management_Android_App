@@ -135,7 +135,7 @@ public class SearchBook extends AppCompatActivity {
         });
 
             FirestoreRecyclerOptions options = new FirestoreRecyclerOptions.Builder<Book>().setQuery(query, Book.class).build();
-            adapter = new BookAdapter(options, key, mode);
+            adapter = new BookAdapter(options, key.toUpperCase(), mode);
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
