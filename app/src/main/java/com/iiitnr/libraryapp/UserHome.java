@@ -28,16 +28,18 @@ public class UserHome extends AppCompatActivity implements View.OnClickListener 
         searchBook1=(Button)findViewById(R.id.searchBook1);
         seeBook=(Button)findViewById(R.id.seeBook);
         logOut1=(Button)findViewById(R.id.logOut1);
+        buttonReissue=(Button)findViewById(R.id.buttonReissue);
 
         db=FirebaseFirestore.getInstance();
         searchBook1.setOnClickListener(this);
         seeBook.setOnClickListener(this);
         logOut1.setOnClickListener(this);
+        buttonReissue.setOnClickListener(this);
     }
 
 
     private TextView title1;
-    private Button searchBook1,seeBook,logOut1;
+    private Button searchBook1,seeBook,logOut1,buttonReissue;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore db;
 
@@ -73,6 +75,11 @@ public class UserHome extends AppCompatActivity implements View.OnClickListener 
         if(v==seeBook)
         {
             startActivity(new Intent(getApplicationContext(),UserSeeMyBooks.class));
+        }
+
+        if(v==buttonReissue)
+        {
+            startActivity(new Intent(getApplicationContext(),UserReissueBook.class));
         }
     }
 }

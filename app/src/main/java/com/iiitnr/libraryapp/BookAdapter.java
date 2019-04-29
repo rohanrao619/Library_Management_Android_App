@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class BookAdapter extends FirestoreRecyclerAdapter<Book, BookAdapter.Book> {
 
@@ -26,7 +27,6 @@ public class BookAdapter extends FirestoreRecyclerAdapter<Book, BookAdapter.Book
     @Override
     protected void onBindViewHolder(@NonNull Book holder, int position, @NonNull com.iiitnr.libraryapp.Book model) {
 
-
         holder.bookId.setText("ID : "+String.valueOf(model.getId()));
         holder.bookType.setText("Category : "+model.getType());
         holder.bookAvailable.setText("Available : "+String.valueOf(model.getAvailable()));
@@ -42,8 +42,6 @@ public class BookAdapter extends FirestoreRecyclerAdapter<Book, BookAdapter.Book
                layoutParams.width=0;
                holder.itemView(layoutParams);
             }
-
-
     }
 
     @NonNull
@@ -64,7 +62,7 @@ public class BookAdapter extends FirestoreRecyclerAdapter<Book, BookAdapter.Book
 
         public Book(@NonNull View itemView) {
             super(itemView);
-            bookId=itemView.findViewById(R.id.bookId);
+            bookId= itemView.findViewById(R.id.bookId);
             bookAvailable=itemView.findViewById(R.id.bookAvailable);
             bookName=itemView.findViewById(R.id.bookName);
             bookType=itemView.findViewById(R.id.bookType);

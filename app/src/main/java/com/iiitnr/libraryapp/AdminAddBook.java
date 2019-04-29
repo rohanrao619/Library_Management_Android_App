@@ -119,6 +119,7 @@ public class AdminAddBook extends AppCompatActivity implements View.OnClickListe
 
     private void addBook()
     {
+
         boolean res=(verifyBid()|verifyTitle()|verifyUnits()|verifyCategory());
         if(res==true)
             return;

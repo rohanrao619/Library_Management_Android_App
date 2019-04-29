@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdminReissueBook"></activity>
+        <activity android:name=".UserReissueBook"></activity>
+        <activity android:name=".AdminReissueBook" />
         <activity android:name=".SearchBookSet" />
         <activity android:name=".SearchBook" />
         <activity android:name=".AdminCollectFine" />

@@ -3,6 +3,8 @@ package com.iiitnr.libraryapp;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,12 +29,16 @@ public class UserSeeMyBooks extends AppCompatActivity {
 
     private FirebaseFirestore db;
     private FirebaseAuth firebaseAuth;
-    private TextView editMyBooks;
+    private TextView ifNoBook1;
     private User U = new User();
-    private String S = " ";
-    private int flag;
     private Book B = new Book();
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+    private int s;
+
+    private MyBook[] myBooks= new MyBook[3];
+
+
+    RecyclerView recyclerView;
+    //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +47,8 @@ public class UserSeeMyBooks extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         db = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        editMyBooks = (TextView) findViewById(R.id.editMyBooks);
-
+        ifNoBook1 = (TextView) findViewById(R.id.ifNoBook1);
+        recyclerView=(RecyclerView)findViewById(R.id.recycle1) ;
         showBook();
     }
 
@@ -54,12 +60,12 @@ public class UserSeeMyBooks extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                 B=task.getResult().toObject(Book.class);
-                Toast.makeText(UserSeeMyBooks.this, ""+B.getTitle(), Toast.LENGTH_SHORT).show();
-
             }
 
         });
     }
+
+
     private void showBook()
     {
 
@@ -68,9 +74,14 @@ public class UserSeeMyBooks extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
+
+
                     U = task.getResult().toObject(User.class);
 
                     if (!U.getBook().isEmpty()) {
+                        s=U.getBook().size();
+
+
                         List<Integer> l = new ArrayList<Integer>();
                         l = U.getBook();
 
@@ -78,32 +89,38 @@ public class UserSeeMyBooks extends AppCompatActivity {
                         for (int i = 0; i < l.size(); i++) {
 
                             setBook(i);
-
+                            MyBook myBook=new MyBook();
+                            myBook.setBid(U.getBook().get(i));
                             Date d = new Date();
-                            S+="\n\nBook ID :"+l.get(i);
-                            S += "\nTitle : " + B.getTitle() + "\nCategory : " + B.getType();
                             d=U.getDate().get(i).toDate();
-                            S+="\nIssue Date : "+simpleDateFormat.format(d);
+                            myBook.setIdate(d);
                             Calendar c=Calendar.getInstance();
                             c.setTime(d);
                             c.add(Calendar.DAY_OF_MONTH,14);
                             d=c.getTime();
-                            S+="\nReturn Date : "+simpleDateFormat.format(d);
-                            S+="\nFine : "+U.getFine().get(i);
+                            myBook.setDdate(d);
+                            myBooks[i]=myBook;
+                            Toast.makeText(UserSeeMyBooks.this, ""+myBook.getBid(), Toast.LENGTH_SHORT).show();
                         }
-                        if (flag == 1) {
-                            editMyBooks.setText("BAD CONNECTION");
-                        } else {
-                            editMyBooks.setText(S);
+                        RecyclerView.Adapter adapter=new MyBookAdapter(myBooks);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getParent()));
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setAdapter(adapter);
 
-                        }
                     }
-                } else {
-                    editMyBooks.setText("BAD CONNECTION");
                 }
             }
         });
-    }
 
+
+        MyBook[] myBooks1=new MyBook[1];
+        for(int q=0;q<s;q++)
+            myBooks1[q]=myBooks[q];
+        //Toast.makeText(this, ""+myBooks[0].getBid(), Toast.LENGTH_SHORT).show();
+       /* RecyclerView.Adapter adapter=new MyBookAdapter(myBooks1);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);*/
+    }
 
 }
