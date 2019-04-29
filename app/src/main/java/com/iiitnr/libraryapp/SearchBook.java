@@ -49,6 +49,7 @@ public class SearchBook extends AppCompatActivity {
         progressDialog.setMessage("Please Wait !");
         FirebaseApp.initializeApp(this);
         db=FirebaseFirestore.getInstance();
+        progressDialog.show();
 
 
 
@@ -111,7 +112,7 @@ public class SearchBook extends AppCompatActivity {
 
         }
         //progressDialog.show();
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        /*query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
@@ -133,12 +134,14 @@ public class SearchBook extends AppCompatActivity {
 
             }
         });
+        */
 
             FirestoreRecyclerOptions options = new FirestoreRecyclerOptions.Builder<Book>().setQuery(query, Book.class).build();
             adapter = new BookAdapter(options, key.toUpperCase(), mode);
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
+            progressDialog.cancel();
 
     }
 

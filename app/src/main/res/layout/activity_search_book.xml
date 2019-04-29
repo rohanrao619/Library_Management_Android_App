@@ -9,7 +9,11 @@
 <TextView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:textSize="18dp"
+    android:text="No Such Book !"
+    android:textAlignment="center"
+
+    android:layout_marginTop="0.2in"
     android:id="@+id/ifNoBook"
     android:textColor="#F10A0A"/>
 

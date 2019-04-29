@@ -1,5 +1,6 @@
 package com.iiitnr.libraryapp;
 
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,9 +33,15 @@ public class UserSeeMyBooks extends AppCompatActivity {
     private TextView ifNoBook1;
     private User U = new User();
     private Book B = new Book();
-    private int s;
+    private ProgressDialog progressDialog;
 
-    private MyBook[] myBooks= new MyBook[3];
+
+    List<Integer> l = new ArrayList<Integer>();
+    MyBook myBook=new MyBook();
+    RecyclerView.Adapter adapter;
+    public int i,j;
+
+    private List<MyBook> myBooks=new ArrayList<>();
 
 
     RecyclerView recyclerView;
@@ -48,21 +55,45 @@ public class UserSeeMyBooks extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         ifNoBook1 = (TextView) findViewById(R.id.ifNoBook1);
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("Please Wait ...");
+        progressDialog.setCancelable(false);
         recyclerView=(RecyclerView)findViewById(R.id.recycle1) ;
+        progressDialog.show();
         showBook();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getParent()));
+        adapter=new MyBookAdapter(myBooks);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
     }
 
     private void setBook(int i)
     {
+        j=0;
 
         db.document("Book/"+U.getBook().get(i)/100).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
+
                 B=task.getResult().toObject(Book.class);
+
+                Date d = new Date();
+                d=U.getDate().get(j).toDate();
+                Calendar c=Calendar.getInstance();
+                c.setTime(d);
+                c.add(Calendar.DAY_OF_MONTH,14);
+                d=c.getTime();
+
+                myBooks.add(new MyBook(U.getBook().get(j),B.getTitle(),B.getType(),U.getDate().get(j).toDate(),d));
+                adapter.notifyDataSetChanged();
+                j++;
             }
 
         });
+
+
     }
 
 
@@ -79,48 +110,26 @@ public class UserSeeMyBooks extends AppCompatActivity {
                     U = task.getResult().toObject(User.class);
 
                     if (!U.getBook().isEmpty()) {
-                        s=U.getBook().size();
 
-
-                        List<Integer> l = new ArrayList<Integer>();
                         l = U.getBook();
-
-
-                        for (int i = 0; i < l.size(); i++) {
+                        for (i = 0; i < l.size(); i++) {
 
                             setBook(i);
-                            MyBook myBook=new MyBook();
-                            myBook.setBid(U.getBook().get(i));
-                            Date d = new Date();
-                            d=U.getDate().get(i).toDate();
-                            myBook.setIdate(d);
-                            Calendar c=Calendar.getInstance();
-                            c.setTime(d);
-                            c.add(Calendar.DAY_OF_MONTH,14);
-                            d=c.getTime();
-                            myBook.setDdate(d);
-                            myBooks[i]=myBook;
-                            Toast.makeText(UserSeeMyBooks.this, ""+myBook.getBid(), Toast.LENGTH_SHORT).show();
                         }
-                        RecyclerView.Adapter adapter=new MyBookAdapter(myBooks);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getParent()));
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setAdapter(adapter);
 
+                        progressDialog.cancel();
+
+                    }
+                    else
+                    {
+                        progressDialog.cancel();
+                        ifNoBook1.setText("YOU HAVE NO ISSUED BOOKS !");
+                        ifNoBook1.setTextSize(18);
                     }
                 }
             }
         });
 
-
-        MyBook[] myBooks1=new MyBook[1];
-        for(int q=0;q<s;q++)
-            myBooks1[q]=myBooks[q];
-        //Toast.makeText(this, ""+myBooks[0].getBid(), Toast.LENGTH_SHORT).show();
-       /* RecyclerView.Adapter adapter=new MyBookAdapter(myBooks1);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);*/
     }
 
 }

@@ -7,14 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyBookAdapter extends RecyclerView.Adapter<MyBookAdapter.My_Book_View> {
 
-    public MyBookAdapter(MyBook[] myBooks) {
+    public MyBookAdapter(List<MyBook> myBooks) {
 
         this.myBooks=myBooks;
     }
 
-    private MyBook[] myBooks;
+    private List<MyBook> myBooks=new ArrayList<>();
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
 
     @NonNull
     @Override
@@ -27,17 +32,17 @@ public class MyBookAdapter extends RecyclerView.Adapter<MyBookAdapter.My_Book_Vi
     @Override
     public void onBindViewHolder(@NonNull My_Book_View my_book_view, int i) {
 
-        my_book_view.bookId1.setText("ID : "+myBooks[i].getBid());
-        my_book_view.bookName1.setText("Title : "+myBooks[i].getTitle());
-        my_book_view.bookType1.setText("Type : "+myBooks[i].getType());
-        my_book_view.bookIdate.setText("Issue Date : "+myBooks[i].getIdate().toString());
-        my_book_view.bookDdate.setText("Due Date : "+myBooks[i].getDdate().toString());
+        my_book_view.bookId1.setText("ID : "+myBooks.get(i).getBid());
+        my_book_view.bookName1.setText("Title : "+myBooks.get(i).getTitle());
+        my_book_view.bookType1.setText("Type : "+myBooks.get(i).getType());
+        my_book_view.bookIdate.setText("Issue Date : "+simpleDateFormat.format(myBooks.get(i).getIdate()));
+        my_book_view.bookDdate.setText("Due Date : "+simpleDateFormat.format(myBooks.get(i).getDdate()));
 
     }
 
     @Override
     public int getItemCount() {
-        return myBooks.length;
+        return myBooks.size();
     }
 
     class My_Book_View extends RecyclerView.ViewHolder
@@ -53,5 +58,6 @@ public class MyBookAdapter extends RecyclerView.Adapter<MyBookAdapter.My_Book_Vi
             bookDdate=itemView.findViewById(R.id.bookDdate);
         }
     }
+
 
 }
