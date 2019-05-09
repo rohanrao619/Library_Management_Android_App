@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,92 +8,117 @@
     android:orientation="vertical"
     tools:context=".AdminHome">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Admin Home"
-        android:textSize="30dp"
-        android:textColor="@android:color/black"
-        android:textAlignment="center"
-        android:layout_marginTop="10dp"
-        />
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="200dp"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchBook"
-        android:text="Search"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:layout_width="200dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:id="@+id/addBook"
-        android:text="Add Book"
-        />
-    <Button
-        android:layout_width="200dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:id="@+id/removeBook"
-        android:text="Remove Book"
-        />
-    <Button
-        android:layout_width="200dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:id="@+id/updateBook"
-        android:text="Update"
-        />
-    <Button
-        android:layout_width="200dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:id="@+id/issueBook"
-        android:text="Issue Book to User"
-        />
-    <Button
-        android:layout_width="200dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:id="@+id/returnBook"
-        android:text="Return Book from User"
-        />
 
-    <Button
-        android:layout_width="200dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:id="@+id/reissueBook"
-        android:text="Re-Issue Book"
-        />
 
-    <Button
-        android:layout_width="200dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:id="@+id/collect1"
-        android:text="Collect Fine"
-        />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ADMIN HOME"
+                android:textSize="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textAlignment="center"
+                />
 
-    <Button
-        android:layout_width="200dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:id="@+id/logOut"
-        android:text="Log Out"
-        />
+            <Button
+                android:layout_width="200dp"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/searchBook"
+                android:text="Search"
+                />
 
-</LinearLayout>
+            <Button
+                android:layout_width="200dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/addBook"
+                android:text="Add Book"
+                />
+            <Button
+                android:layout_width="200dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/removeBook"
+                android:text="Remove Book"
+                />
+            <Button
+                android:layout_width="200dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/updateBook"
+                android:text="Update"
+                />
+            <Button
+                android:layout_width="200dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/issueBook"
+                android:text="Issue Book to User"
+                />
+            <Button
+                android:layout_width="200dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/returnBook"
+                android:text="Return Book from User"
+                />
+
+            <Button
+                android:layout_width="200dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/reissueBook"
+                android:text="Re-Issue Book"
+                />
+
+            <Button
+                android:layout_width="200dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/collect1"
+                android:text="Collect Fine"
+                />
+
+            <Button
+                android:layout_width="200dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/logOut"
+                android:text="Log Out"
+                />
+
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

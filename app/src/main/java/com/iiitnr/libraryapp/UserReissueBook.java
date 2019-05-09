@@ -42,6 +42,13 @@ public class UserReissueBook extends AppCompatActivity {
 
 
     @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_reissue_book);
@@ -204,6 +211,7 @@ public class UserReissueBook extends AppCompatActivity {
                 if(task.isSuccessful())
                 {
 
+                    p.cancel();
                     Toast.makeText(UserReissueBook.this, "Re-Issued Successfully !", Toast.LENGTH_SHORT).show();
                 }
                 else

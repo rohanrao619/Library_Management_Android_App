@@ -29,6 +29,13 @@ import java.util.List;
 public class AdminAddBook extends AppCompatActivity implements View.OnClickListener{
 
     @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add_book);

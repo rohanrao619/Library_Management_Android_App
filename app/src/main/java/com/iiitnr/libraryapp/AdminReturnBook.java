@@ -35,6 +35,12 @@ public class AdminReturnBook extends AppCompatActivity {
     private User U = new User();
     private Book B = new Book();
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

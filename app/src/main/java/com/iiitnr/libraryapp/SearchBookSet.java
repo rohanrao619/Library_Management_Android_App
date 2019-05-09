@@ -27,6 +27,13 @@ public class SearchBookSet extends AppCompatActivity {
     private String type;
     private CheckBox checkBox;
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+
+    }
+
     private boolean verifyTitle()
     {
         String t=editTitle3.getEditText().getText().toString().trim();

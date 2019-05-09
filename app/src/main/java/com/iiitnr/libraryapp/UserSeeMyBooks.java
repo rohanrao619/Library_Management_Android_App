@@ -48,6 +48,13 @@ public class UserSeeMyBooks extends AppCompatActivity {
     //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yy");
 
     @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_see_my_books);

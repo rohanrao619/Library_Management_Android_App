@@ -32,9 +32,16 @@ public class SearchBook extends AppCompatActivity {
     Query query;
 
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
 
 
@@ -141,6 +148,7 @@ public class SearchBook extends AppCompatActivity {
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycle);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(adapter);
+        adapter.startListening();
             progressDialog.cancel();
 
     }

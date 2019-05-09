@@ -33,6 +33,13 @@ public class AdminReissueBook extends AppCompatActivity {
     private boolean res1;
     private User U = new User();
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

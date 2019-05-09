@@ -27,19 +27,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        //show(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
-        AlertDialog.Builder alert =new AlertDialog.Builder(getApplicationContext());
-        alert.setCancelable(false).setTitle(remoteMessage.getNotification().getTitle()).setMessage(remoteMessage.getNotification().getBody())
-                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        show(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
 
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alertDialog=alert.create();
-        alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_PANEL);
-        alert.show();
 
     }
 
@@ -57,14 +46,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(notificationChannel);
         }
 
-        Intent i =new Intent(this,SignInActivity.class);
+        Intent i =new Intent(this,UserSeeMyBooks.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent=PendingIntent.getActivity(this,0,i,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,"reminder").setContentTitle(x).setContentText(y).setSmallIcon(R.drawable.ic_stat_notification)
-                .setAutoCancel(true).setContentIntent(pendingIntent);
+                .setAutoCancel(true).setContentIntent(pendingIntent).setPriority(NotificationManagerCompat.IMPORTANCE_MAX).setStyle(new NotificationCompat.BigTextStyle());
 
         NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(this);
-        notificationManagerCompat.notify(123,builder.build());
+        notificationManagerCompat.notify(101,builder.build());
 
 
     }

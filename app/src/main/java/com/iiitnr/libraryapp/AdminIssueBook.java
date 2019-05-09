@@ -39,6 +39,12 @@ public class AdminIssueBook extends AppCompatActivity {
     private User U = new User();
     private Book B1 = new Book();
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+
+    }
 
 
     @Override

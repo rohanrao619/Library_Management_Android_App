@@ -157,6 +157,14 @@ private void updateBook()
 
 
 }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+
+    }
+
 @Override
     protected void onCreate(Bundle savedInstanceState) {
 

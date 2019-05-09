@@ -32,6 +32,12 @@ public class AdminCollectFine extends AppCompatActivity {
     private FirebaseFirestore db;
     private User U;
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+
+    }
 
     private void collectFine()
     {
@@ -49,7 +55,7 @@ public class AdminCollectFine extends AppCompatActivity {
         else
         {
             AlertDialog.Builder alert=new AlertDialog.Builder(this);
-            alert.setCancelable(false).setTitle("Collect Fine!").setMessage("Collect Rs."+tot+" from "+U.getName()).setPositiveButton("Collect", new DialogInterface.OnClickListener() {
+            alert.setCancelable(false).setTitle("Collect Fine !").setMessage("Collect Rs."+tot+" from "+U.getName()).setPositiveButton("Collect", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
