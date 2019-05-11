@@ -7,7 +7,9 @@
     android:layout_marginEnd="8dp"
     android:layout_marginStart="8dp"
     app:cardBackgroundColor="#85F1E9"
-    app:cardCornerRadius="15dp">
+    android:elevation="@dimen/cardview_default_radius"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,27 +19,29 @@
 
         <TextView
             android:id="@+id/bookId1"
+            android:textColor="#000"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/bookName1"
-
+            android:textColor="#000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/bookType1"
 
+            android:textColor="#000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/bookIdate"
-
+            android:textColor="#000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/bookDdate"
-
+            android:textColor="#000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
