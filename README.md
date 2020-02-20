@@ -1,6 +1,6 @@
 # Library Management Android App
 
-This project is an Android application developed using Android Studio that can be used by users/admin to perform various Library related operations such as searching books, seeing books issued to the user, re-issuing books, adding/removing/updating book, collecting fines etc. The App uses Google Firebase Cloud Firestore as the back-end database for storing details of books and users. Cloud Messaging is used to send notifications to users if a return deadline is approaching/fine is increased and when a new book is added to Library by an admin. Cloud Functions are used to monitor the database and update fines, trigger notifications. The App has a user-friendly interactive interface and is easy to use.
+This project is an Android application developed using Android Studio that can be used by users/admin to perform various Library related operations such as searching books, seeing books issued to the user, re-issuing books, adding/removing/updating book, collecting fines etc. The App uses Google Firebase Cloud Firestore as the back-end database for storing details of books and users. Cloud Messaging is used to send notifications to users if a return deadline is approaching/fine is increased and when a new book is added to Library by an admin. Cloud Functions are used to monitor the database and update fines, trigger notifications. The App has a user-friendly and interactive interface.
 
 ## Features
 * Simple and minimal Layout Designs.
@@ -72,10 +72,10 @@ This project is an Android application developed using Android Studio that can b
 |**Deadline Approaching Notification**|**Fine Increased Notification**|
 
 ## Tools Used
-* [Android Studio](https://developer.android.com/studio) : Android Studio is the official integrated development environment for Google's Android operating system, built on JetBrains' IntelliJ IDEA software and designed specifically for Android development.
-* [Cloud Firestore](https://firebase.google.com/products/firestore) : Cloud Firestore is a flexible, scalable database for mobile, web, and server development from Firebase and Google Cloud Platform.
-* [Cloud Functions](https://cloud.google.com/functions) : Cloud Functions is a hosted, private, and scalable Node.js environment which lets you automatically run backend code in response to events triggered by Firebase features and HTTPS requests.
-* [Firebase Cloud Messaging](https://firebase.google.com/products/cloud-messaging) : Firebase Cloud Messaging is a cross-platform cloud solution for messages and notifications for Android, iOS, and web applications.
+* [Android Studio](https://developer.android.com/studio) : Used as the Android developement environment.
+* [Cloud Firestore](https://firebase.google.com/products/firestore) : Used as the backend database.
+* [Cloud Functions](https://cloud.google.com/functions) : Used to deploy cloud scripts automatically triggered by Firebase features and HTTPS requests.
+* [Firebase Cloud Messaging](https://firebase.google.com/products/cloud-messaging) : Used for sending push notifications.
 
 ## Contributing
 You are welcome to contribute :
