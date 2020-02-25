@@ -1,16 +1,16 @@
 # Library Management Android App
 
-This project is an Android application developed using Android Studio that can be used by users/admin to perform various Library related operations such as searching books, seeing books issued to the user, re-issuing books, adding/removing/updating book, collecting fines etc. The App uses Google Firebase Cloud Firestore as the back-end database for storing details of books and users. Cloud Messaging is used to send notifications to users if a return deadline is approaching/fine is increased and when a new book is added to Library by an admin. Cloud Functions are used to monitor the database and update fines, trigger notifications. The App has a user-friendly and interactive interface.
+This project is an Android application developed using Android Studio that can be used by users/admin to perform various Library related operations such as searching books, seeing books issued to the user, re-issuing books, adding/removing/updating books, collecting fines, etc. The App uses Google Firebase Cloud Firestore as the back-end database for storing details of books and users. Cloud Messaging is used to send notifications to users if a return deadline is approaching/fine is increased and when a new book is added to the Library by an admin. Cloud Functions are used to monitor the database and update fines, trigger notifications. The App has a user-friendly and interactive interface.
 
 ## Features
 * Simple and minimal Layout Designs.
 * Interlinked Activities for different functions.
 * Text Views and Toasts for displaying info.
-* Interaction with the User by help of Edit Text Views, Buttons, Checkboxes, Alert Dialogs, Card Views etc.
+* Interaction with the User with the help of Edit Text Views, Buttons, Checkboxes, Alert Dialogs, Card Views, etc.
 * Updates using Push Notifications.
-* Realtime Synchronization with Online Database.
+* Real-time Synchronization with Online Database.
 * Auto Login on App launch if the user/admin is logged in.
-* Security Rules to protect database from malicious activities.
+* Security Rules to protect the database from malicious activities.
 
 ## Functionalities
 * Admin Account :
@@ -38,7 +38,7 @@ This project is an Android application developed using Android Studio that can b
   
 * Cloud Functions to :
 
-  * Increase Fine of user if deadline is crossed, once in a day.
+  * Increase Fine of the user if the deadline is crossed, once in a day.
   * Trigger Notifications based on events.
 
 ## Screenshots
