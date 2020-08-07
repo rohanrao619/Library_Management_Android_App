@@ -91,5 +91,11 @@ This Project is licensed under the MIT License, see the [LICENSE](LICENSE) file 
 
 ## Final Notes
 **Thanks for going through this Repository! Have a nice day.**</br>
-</br>**S Rohan Rao**</br> 
-Contact me : rohanrao619@gmail.com
+</br>**Got any Queries? Feel free to contact me.**</br>
+</br>**S Rohan Rao**
+<p align="left">
+<a href="mailto:rohanrao619@gmail.com"><img src="https://github.com/rohanrao619/Icons/blob/master/SVGs/Gmail.svg" height ="45" title="Gmail" alt="mailto:rohanrao619@gmail.com"></a>
+<a href="https://github.com/rohanrao619"><img src="https://github.com/rohanrao619/Icons/blob/master/SVGs/GitHub.svg" height ="45" title="GitHub" alt="https://github.com/rohanrao619"></a>
+<a href="https://www.linkedin.com/in/rohanrao619"><img src="https://github.com/rohanrao619/Icons/blob/master/SVGs/LinkedIn.svg" height ="45" title="LinkedIn" alt="https://www.linkedin.com/in/rohanrao619"></a>
+<a href="https://rohanrao619.github.io/"><img src="https://github.com/rohanrao619/Icons/blob/master/SVGs/Portfolio.svg" height ="45" title="Portfolio Website" alt="https://rohanrao619.github.io/"></a>
+</p>
