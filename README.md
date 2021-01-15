@@ -86,6 +86,13 @@ You are welcome to contribute :
 4. Push to the branch : `git push origin new_feature`
 5. Submit a pull request !
 
+## Future Work
+* UI Improvement and Optimization
+* New Features/Functionalities
+* Generalization for Flexible Usage
+
+If you have any new ideas or suggestions to improve this project, feel free to contact me. Your valuable feedback is highly appreciated!
+
 ## License
 This Project is licensed under the MIT License, see the [LICENSE](LICENSE) file for details.
 
