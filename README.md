@@ -22,7 +22,7 @@ You are welcome to contribute :
 ## Future Work
 * UI Improvement and Optimization
 * New Features/Functionalities
-* Generalization for Flexible Usage
+* Generalization for Flexible Usage (This App was implemented specifically for my College's Library System)
 
 If you have any new ideas or suggestions to improve this project, feel free to contact me. Your valuable feedback is highly appreciated!
 
